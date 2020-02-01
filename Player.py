@@ -68,16 +68,12 @@ class Player:
     
     def inc_x(self, xv):
         self._x += xv
-
     
     def inc_y(self, yv):
         self._y += yv
 
     def inc_xv(self, dx):
-        if not self.is_crouching:
-            self._xv += dx
-        else:
-            self._xv = 0
+        self._xv += dx
 
     def inc_yv(self, dy):
         self._yv += dy
