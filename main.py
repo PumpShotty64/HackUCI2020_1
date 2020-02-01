@@ -4,6 +4,8 @@ import pygame as pg
 import traceback
 import random
 
+from Player import Player
+
 # Pygame constaants
 WINDOWWIDTH  = 1280
 WINDOWHEIGHT = 720
@@ -24,12 +26,18 @@ CLOCK        = pg.time.Clock()
 GENERALFONT = pg.font.SysFont(None, 32)
 DEBUGFONT   = pg.font.SysFont(None, 200)
 DEBUGGERMSG = DEBUGFONT.render("HELLO", True, WHITE)
+FLOOR       = 700  # arbitrary number
 
+# Game code begins
 
-GAMEDISPLAY.blit(DEBUGGERMSG, (100, 100)) # arbitrary position
-pg.display.update()
+p1 = Player((100, 100), (0, 0), (30, 60))
 
-input("PAUSE")
-
-pg.quit()
-quit()
+while True:
+    for event in pg.event.get():
+        if (event.type == pg.QUIT): 
+            pg.quit()
+            quit()
+        else:
+            print(event.type)
+    GAMEDISPLAY.blit(DEBUGGERMSG, (100, 100)) # arbitrary position
+    pg.display.update()
