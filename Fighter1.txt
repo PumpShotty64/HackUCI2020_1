@@ -1,0 +1,8 @@
+hp	100
+idle	Sprites/blue/blue_idle
+x	100
+y	100
+xv	0
+yv	0
+w	64
+h	64

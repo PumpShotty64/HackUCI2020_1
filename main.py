@@ -28,7 +28,11 @@ DEBUGFONT   = pg.font.SysFont(None, 200)
 DEBUGGERMSG = DEBUGFONT.render("HELLO", True, WHITE)
 FLOOR       = 700  # arbitrary number
 
+
+
 # Game code begins
+
+pg.transform.invert()
 
 p1 = Player((100, 100), (0, 0), (30, 60))
 
