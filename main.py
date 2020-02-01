@@ -32,9 +32,10 @@ FLOOR       = 700  # arbitrary number
 
 
 # Game code begins
+img1 = pg.image.load("Sprites/blue/blue_idle.png")
 try:
-    img1 = pg.image.load("Sprites/blue_idle.png")
-    construct("Fighter1.txt")
+    #construct("Fighter1.txt")
+    pass
 except:
     input(traceback.format_exc())
 
@@ -46,5 +47,5 @@ while True:
         else:
             print(event.type)
     GAMEDISPLAY.blit(img1, (100, 100)) # arbitrary position
-    GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
+    #GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
     pg.display.update()
