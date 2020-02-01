@@ -13,7 +13,8 @@ def construct(inf):
         finally:
             if isinstance(line[1], int):
                 d[line[0]] = line[1]
-            else if line[0] == d.keys():
+            else if line[0][:3] == "walk":
                 node = d[line[0]]
-                while
-    #return Fighter(d["hp"], d[""])
+
+
+    #return Fighter(d["hp"], d["walk"], d[])
