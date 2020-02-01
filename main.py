@@ -48,7 +48,9 @@ while True:
             print(event.type)
 
 
-    PM.player_movement();
+    PM.player_movement(p1, p2)
+    p1.update()
+    p2.update()
 
     GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image
     GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy()) 

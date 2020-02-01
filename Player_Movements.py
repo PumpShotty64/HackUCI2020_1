@@ -2,13 +2,15 @@
 
 import pygame as pg
 
-def player_movement():
+def player_movement(p1, p2):
+
 	keys = pg.key.get_pressed()
+
 	if (keys[pg.K_a]): # LEFT
-		print("LEFT")
+		p1.set_xv(-5)
 	elif (keys[pg.K_s]): # DOWN
-		print("DOWN")
+		pass
 	elif (keys[pg.K_d]): # RIGHT
-		print("RIGHT")
+		pass
 	elif (keys[pg.K_w]): # UP
-		print("UP")
+		pass
