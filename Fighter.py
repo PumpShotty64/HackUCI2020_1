@@ -57,7 +57,6 @@ class Fighter(Player):
         self._kick      = tuple(kick)
         self._crouch    = tuple(crouch)
         self._sprite    = self._idle       # most current sprite to be used
-        self._reverse   = False
         self._walkFront = walk             # use to reset walking animation
         Player.__init__(self, xy, xyv, wh)
 
