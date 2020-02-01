@@ -1,10 +1,60 @@
 from Player import Player
 
+import pygame as pg
+from LinkedList import LinkedList
+
+
+def construct(inf):
+    # dictionary containing all key value pairs where the keys are
+    # the object attribute names in Fighter.__init__ and the values
+    # are the coresponding data (see Fighter1.txt for example of
+    # data being read in)
+    d = {}
+
+    for line in open(inf):
+        line = line.rstrip().split("\t")
+
+        # we use a try-except-finally block because entries in the
+        # file being read may be in any order. Entries are either
+        # integers or filenames to be made into Pygame Surfaces obj.
+        try:
+            line[1] = int(line[1])
+        except:
+            line[1] = pg.image.load(line[1])
+        finally:
+            if isinstance(line[1], int):
+                d[line[0]] = line[1]
+            elif line[0] in d.keys():
+                d[line[0]].append(line[1])
+            else:
+                d[line[0]] = [line[1]]
+
+    # because walking is a looping animation, we use a linked list
+    # to make animation more fluid and efficient
+    start   = LinkedList(None, d["walk"][0])
+    current = start
+    for i in range(1, len(d["walk"])):
+        current.next = LinkedList(None, d["walk"][i])
+        current = current.next
+    current.next = start
+    d["walk"] = start
+
+    # return a fighter containing the data specified in FighterX.txt
+    return Fighter(d["hp"],   d["idle"], d["walk"], 
+                   d["pnch"], d["kick"], d["crch"], 
+                   (100, 100), (0, 0), (64, 64))
+
+
+
 class Fighter(Player):
-    def __init__(self, hp, png, xy, xyv, wh):
-        self._hp  = hp
-        self._png = png # only one image for now
-        Player(self, xy, xyv, wh)
+    def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh):
+        self._hp     = hp
+        self._idle   = idle
+        self._walk   = walk # linked list
+        self._punch  = tuple(punch)
+        self._kick   = tuple(kick)
+        self._crouch = tuple(crouch)
+        Player.__init__(self, xy, xyv, wh)
 
     # box = ((left, top), (right, bottom))
     def attack(self, dmg, box, ph):

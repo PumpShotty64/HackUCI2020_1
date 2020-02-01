@@ -5,7 +5,7 @@ import traceback
 import random
 
 from Player import Player
-from Constructors import construct
+from Fighter import Fighter, construct
 
 # Pygame constaants
 WINDOWWIDTH  = 1280
@@ -32,10 +32,9 @@ FLOOR       = 700  # arbitrary number
 
 
 # Game code begins
-img1 = pg.image.load("Sprites/blue/blue_idle.png")
+img1 = pg.image.load("Sprites/Blue/blue_idle.png")
 try:
-    #construct("Fighter1.txt")
-    pass
+    p1 =construct("Fighter1.txt")
 except:
     input(traceback.format_exc())
 
@@ -46,6 +45,6 @@ while True:
             quit()
         else:
             print(event.type)
-    GAMEDISPLAY.blit(img1, (100, 100)) # arbitrary position
+    GAMEDISPLAY.blit(img1, (100, 100)) # draws image 
     #GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
-    pg.display.update()
+    pg.display.update() # displays image
