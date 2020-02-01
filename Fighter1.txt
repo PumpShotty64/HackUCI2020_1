@@ -12,8 +12,8 @@ walk	Sprites/blue/blue_walk1.png
 walk	Sprites/blue/blue_walk2.png
 walk	Sprites/blue/blue_walk3.png
 x	100
-y	100
+y	450
 xv	0
 yv	0
-w	64
-h	64
+w	200
+h	200

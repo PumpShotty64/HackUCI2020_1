@@ -28,14 +28,14 @@ BACKGROUND  = pg.transform.scale(pg.image.load("Sprites/tempBack.jpg"), (1280,72
 GENERALFONT = pg.font.SysFont(None, 32)
 DEBUGFONT   = pg.font.SysFont(None, 200)
 DEBUGGERMSG = DEBUGFONT.render("HELLO", True, WHITE)
-FLOOR       = 700  # arbitrary number
+FLOOR       = 450 
 
 
 
 # Game code begins
 try:
     p1 = construct("Fighter1.txt")
-    p2 = construct("Fighter2.txt")
+    p2 = construct("Fighter2.txt", True)
 except:
     input(traceback.format_exc())
 
@@ -46,7 +46,6 @@ while True:
             quit()
         else:
             print(event.type)
-
 
     PM.player_movement(p1, p2)
     p1.update()

@@ -11,9 +11,9 @@ walk	Sprites/red/red_walk0.png
 walk	Sprites/red/red_walk1.png
 walk	Sprites/red/red_walk2.png
 walk	Sprites/red/red_walk3.png
-x	700
-y	100
+x	980
+y	450
 xv	0
 yv	0
-w	64
-h	64
+w	200
+h	200

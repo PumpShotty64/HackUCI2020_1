@@ -4,7 +4,7 @@ import pygame as pg
 from LinkedList import LinkedList
 
 
-def construct(inf):
+def construct(inf, reverse = False):
     # dictionary containing all key value pairs where the keys are
     # the object attribute names in Fighter.__init__ and the values
     # are the coresponding data (see Fighter1.txt for example of
@@ -20,7 +20,9 @@ def construct(inf):
         try:
             line[1] = int(line[1])
         except:
-            line[1] = pg.image.load(line[1])
+            line[1] = pg.transform.scale(pg.image.load(line[1]), (200,200))
+            line[1] = line[1] if not reverse else pg.transform.flip(line[1], True, False)
+            # may affect hitbox math ^^
         finally:
             if isinstance(line[1], int):
                 d[line[0]] = line[1]
