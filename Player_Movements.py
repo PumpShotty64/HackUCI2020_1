@@ -7,7 +7,7 @@ def player_movement(p1, p2):
 	keys = pg.key.get_pressed()
 
 	if (keys[pg.K_a]): # LEFT
-		p1.set_xv(-5)
+		p1.set_xv(-1)
 	elif (keys[pg.K_s]): # DOWN
 		pass
 	elif (keys[pg.K_d]): # RIGHT

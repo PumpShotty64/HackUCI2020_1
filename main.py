@@ -24,7 +24,7 @@ GAMEDISPLAY  = pg.display.set_mode(RESOLUTION)
 CLOCK        = pg.time.Clock()
 
 # Game constants
-# BACKGROUND  = pg.image.load("")
+BACKGROUND  = pg.transform.scale(pg.image.load("Sprites/tempBack.jpg"), (1280,720))
 GENERALFONT = pg.font.SysFont(None, 32)
 DEBUGFONT   = pg.font.SysFont(None, 200)
 DEBUGGERMSG = DEBUGFONT.render("HELLO", True, WHITE)
@@ -52,8 +52,10 @@ while True:
     p1.update()
     p2.update()
 
+    GAMEDISPLAY.blit(BACKGROUND, (0, 0))
     GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image
     GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy()) 
+
 
     #GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
     pg.display.update() # displays image
