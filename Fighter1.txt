@@ -1,5 +1,12 @@
 hp	100
-idle	Sprites/blue/blue_idle
+idle	Sprites/blue_idle.png
+pnch0	Sprites/blue_punch0.png
+pnch1	Sprites/blue_punch1.png
+pnch2	Sprites/blue_punch2.png
+pnch3	Sprites/blue_punch3.png
+kick0	Sprites/blue_kick0.png
+kick1	Sprites/blue_kick1.png
+crch0	Sprites/blue_crouch0.png
 x	100
 y	100
 xv	0

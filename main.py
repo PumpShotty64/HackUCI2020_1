@@ -5,6 +5,7 @@ import traceback
 import random
 
 from Player import Player
+from Constructors import construct
 
 # Pygame constaants
 WINDOWWIDTH  = 1280
@@ -31,10 +32,11 @@ FLOOR       = 700  # arbitrary number
 
 
 # Game code begins
-
-pg.transform.invert()
-
-p1 = Player((100, 100), (0, 0), (30, 60))
+try:
+    img1 = pg.image.load("Sprites/blue_idle.png")
+    construct("Fighter1.txt")
+except:
+    input(traceback.format_exc())
 
 while True:
     for event in pg.event.get():
@@ -43,5 +45,6 @@ while True:
             quit()
         else:
             print(event.type)
-    GAMEDISPLAY.blit(DEBUGGERMSG, (100, 100)) # arbitrary position
+    GAMEDISPLAY.blit(img1, (100, 100)) # arbitrary position
+    GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
     pg.display.update()
