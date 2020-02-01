@@ -44,12 +44,10 @@ while True:
         if (event.type == pg.QUIT): 
             pg.quit()
             quit()
-        else:
-            print(event.type)
-
-    PM.player_movement(p1, p2)
-    p1.update()
-    p2.update()
+        if (event.type == pg.KEYDOWN or event.type == pg.KEYUP):   
+            PM.movement(p1, p2, event)
+    p1.update(FLOOR)
+    p2.update(FLOOR)
 
     GAMEDISPLAY.blit(BACKGROUND, (0, 0))
     GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image

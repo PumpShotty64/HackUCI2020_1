@@ -3,10 +3,16 @@
 # simmulated by inc_xv, inc_yv to change xy-velocity
 
 class Player:
+    GRAVITY = 1
+    SPEED   = 8
+    JUMP    = 25
+
     def __init__(self, xy, xyv, wh):
         self.set_xy(xy)
         self.set_xyv(xyv)
         self.set_dim(wh)
+        self.is_jumping   = False
+        self.is_crouching = False
 
     def set_xy(self, xy):
         self._x = xy[0]
@@ -39,7 +45,8 @@ class Player:
         self._xv = xv
 
     def set_yv(self, yv):
-        self._yv = yv
+        if not self.is_jumping:
+            self._yv = yv
 
     def get_x(self):
         return self._x
@@ -58,16 +65,33 @@ class Player:
 
     def get_h(self):
         return self._h
+    
+    def inc_x(self, xv):
+        self._x += xv
+
+    
+    def inc_y(self, yv):
+        self._y += yv
 
     def inc_xv(self, dx):
-        self._xv += dx
+        if not self.is_crouching:
+            self._xv += dx
+        else:
+            self._xv = 0
 
     def inc_yv(self, dy):
         self._yv += dy
 
-    def update(self):
+    def update(self, floor):
         self._x += self._xv
         self._y += self._yv
+        if (self._y >= floor):
+            self._y  = floor
+            self._yv = 0
+            self.is_jumping = False
+        else:
+            self.is_jumping = True
+            self._yv += Player.GRAVITY
 
 '''
     def overlap(self, other):

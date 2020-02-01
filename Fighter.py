@@ -55,7 +55,7 @@ class Fighter(Player):
         self._walk      = walk             # linked list type
         self._punch     = tuple(punch)
         self._kick      = tuple(kick)
-        self._crouch    = tuple(crouch)
+        self._crouch    = crouch[0]
         self._sprite    = self._idle       # most current sprite to be used
         self._walkFront = walk             # use to reset walking animation
         Player.__init__(self, xy, xyv, wh)
@@ -72,9 +72,22 @@ class Fighter(Player):
             print("OVERLAP")
             return True
 
-    def update(self):
-        # update current sprite accordingly
-        Player.update(self)
+    def set_sprite(self, sprite):
+        if sprite == 0:
+            self._sprite = self._idle
+            self.is_crouching = False
+        if sprite == 1:
+            self._sprite = self._crouch
+            self.is_crouching = True
+        if sprite == 2:
+            self._sprite = self._walk.next
+        if sprite == 3: 
+            pass # kick
+        if sprite == 4:
+            pass # punch
+
+    def update(self, floor):
+        Player.update(self, floor)
 
 
 
