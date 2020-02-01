@@ -13,7 +13,7 @@ def construct(inf):
         finally:
             if isinstance(line[1], int):
                 d[line[0]] = line[1]
-            else if line[0][:3] == "walk":
+            elif line[0][:3] == "walk":
                 node = d[line[0]]
 
 
