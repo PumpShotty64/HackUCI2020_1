@@ -50,6 +50,8 @@ while True:
 
     PM.player_movement();
 
-    GAMEDISPLAY.blit(img1, (100, 100)) # draws image 
+    GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image
+    GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy()) 
+
     #GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
     pg.display.update() # displays image

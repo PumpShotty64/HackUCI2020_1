@@ -42,14 +42,14 @@ def construct(inf):
     # return a fighter containing the data specified in FighterX.txt
     return Fighter(d["hp"],   d["idle"], d["walk"], 
                    d["pnch"], d["kick"], d["crch"], 
-                   (100, 100), (0, 0), (64, 64))
+                   (d["x"], d["y"]), (d["xv"], d["yv"]), (d["w"], d["h"]))
 
 
 
 class Fighter(Player):
     def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh):
         self._hp        = hp
-        self._idle      = idle
+        self._idle      = idle[0]
         self._walk      = walk             # linked list type
         self._punch     = tuple(punch)
         self._kick      = tuple(kick)
@@ -58,7 +58,7 @@ class Fighter(Player):
         self._walkFront = walk             # use to reset walking animation
         Player.__init__(self, xy, xyv, wh)
 
-    def getSprite(self):
+    def get_sprite(self):
         return self._sprite
 
     # box = ((left, top), (right, bottom))
