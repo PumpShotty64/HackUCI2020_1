@@ -6,6 +6,7 @@ import random
 
 from Player import Player
 from Fighter import Fighter, construct
+import Player_Movements as PM
 
 # Pygame constaants
 WINDOWWIDTH  = 1280
@@ -45,5 +46,10 @@ while True:
             quit()
         else:
             print(event.type)
-    GAMEDISPLAY.blit(p1.getSprite(), (100, 100)) # draws image
+
+
+    PM.player_movement();
+
+    GAMEDISPLAY.blit(img1, (100, 100)) # draws image 
+    #GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
     pg.display.update() # displays image
