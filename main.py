@@ -30,7 +30,7 @@ CLOCK        = pg.time.Clock()
 # Game constants
 BACKGROUND  = pg.transform.scale(pg.image.load("Sprites/background.png"), (1280,720))
 GENERALFONT = pg.font.SysFont(None, 200)
-DEBUG       = True
+DEBUG       = False
 FLOOR       = 450 
 
 
@@ -50,8 +50,8 @@ while (p1._hp >= 0 and p2._hp >= 0):
 
     GAMEDISPLAY.blit(BACKGROUND, (0, 0))
     pg.draw.rect(GAMEDISPLAY, GOLD, (0, 0, 1280, 70))
-    pg.draw.rect(GAMEDISPLAY, BLUE, (10, 10, 620 - 630*(1 - p1._hp/p1._hpfull), 50))
-    pg.draw.rect(GAMEDISPLAY, RED, (630 + 620*(1 - p2._hp/p2._hpfull), 10, 630, 50))
+    pg.draw.rect(GAMEDISPLAY, BLUE, (10, 10, 630 - 630*(1 - p1._hp/p1._hpfull), 50) if p1._hp else (0,0,0,0))
+    pg.draw.rect(GAMEDISPLAY, RED, (630 + 630*(1 - p2._hp/p2._hpfull), 10, 630 - 630*(1 - p2._hp/p2._hpfull), 50))
     if DEBUG:
         pg.draw.rect(GAMEDISPLAY, BLACK, p1.get_hitbox())
         pg.draw.rect(GAMEDISPLAY, WHITE, p2.get_hitbox())
@@ -61,6 +61,16 @@ while (p1._hp >= 0 and p2._hp >= 0):
     GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy()) 
 
     pg.display.update() # displays image
+
+GAMEDISPLAY.blit(BACKGROUND, (0, 0))
+pg.draw.rect(GAMEDISPLAY, GOLD, (0, 0, 1280, 70))
+p1._hp = 0 if p1._hp < 0 else pq._hp
+if p1._hp:
+    pg.draw.rect(GAMEDISPLAY, BLUE, (10, 10, 630 - 630*(1 - p1._hp/p1._hpfull), 50))
+else:
+    pg.draw.rect(GAMEDISPLAY, RED, (630 + 630*(1 - p2._hp/p2._hpfull), 10, 630 - 630*(1 - p2._hp/p2._hpfull), 50))
+GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy())
+GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy())
 
 xy  = GENERALFONT.size(("BLUE" if p1._hp else "RED") + " WINS!")
 MSG = GENERALFONT.render(("BLUE" if p1._hp else "RED") + " WINS!", True, BLUE if p1._hp else RED)
