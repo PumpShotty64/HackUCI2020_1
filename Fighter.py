@@ -63,6 +63,7 @@ class Fighter(Player):
     KICKBUFFER   = 2
     def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh, cor):
         self._hp        = hp
+        self._hpfull    = hp
         self._idle      = idle[0]
         self._sprite    = self._idle       # most current sprite to be used
         
@@ -83,8 +84,7 @@ class Fighter(Player):
         self._actionbuf = 0
 
         self._activeHit = (0,0, 0,0)
-        self._damage    = 0 
-        self._newhitb   = False
+        self._damage    = 0
 
         Player.__init__(self, xy, xyv, wh)
 
@@ -130,19 +130,23 @@ class Fighter(Player):
         if sprite == 3: 
             self._activeHit = (self.get_x() + 125, self.get_y() + 150, 50, 50)
             self._sprite = self._kick
+            self._damage = 1
         if sprite == 4:
             self._activeHit = (self.get_x() + 100, self.get_y() + 40, 90, 100)
             self._action = 2
             self._sprite = self._punch.value
             self._actionbuf += 1
+            self._damage = 3
             if self._actionbuf > self.ATTACKBUFFER*0.60:
                 self._activeHit = (0, 0, 0, 0)
                 self._sprite = self._idle
+                self._damage = 0
             if self._actionbuf == self.ATTACKBUFFER:
                 self._punch = self._punch.next
                 self._actionbuf = 0
                 self._action = 0
                 self._activeHit = (0, 0, 0, 0)
+                self._damage = 0
 
     @staticmethod
     def overlap(h, other):
@@ -152,6 +156,7 @@ class Fighter(Player):
 
     def update(self, floor):
         if self._action == 0:
+            self._damage = 0
             Player.update(self, floor)
             if self.get_xv() != 0 and not self.is_jumping:
                 self.set_sprite(2)

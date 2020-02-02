@@ -46,8 +46,8 @@ def movement(p1, p2, event):
 
     if not type(p1).overlap(p1.get_activehit(), p2.get_activehit()):
         if type(p1).overlap(p1.get_activehit(), p2.get_hitbox()):
-            p2.hp -= p1._damage
+            p2._hp -= p1._damage
+            print("take damage!")
         if type(p1).overlap(p1.get_hitbox(), p2.get_activehit()):
-            p1.hp -= p2._damage
-    
+            p1._hp -= p2._damage
     

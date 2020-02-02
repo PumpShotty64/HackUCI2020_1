@@ -54,8 +54,8 @@ while True:
 
     GAMEDISPLAY.blit(BACKGROUND, (0, 0))
     pg.draw.rect(GAMEDISPLAY, GOLD, (0, 0, 1280, 70))
-    pg.draw.rect(GAMEDISPLAY, BLUE, (10, 10, 630 - 630*(1 - p1._hp/100), 50))
-    pg.draw.rect(GAMEDISPLAY, RED, (630 + 630*(1 - p1._hp/100), 10, 630, 50))
+    pg.draw.rect(GAMEDISPLAY, BLUE, (10, 10, 620 - 630*(1 - p1._hp/p1._hpfull), 50))
+    pg.draw.rect(GAMEDISPLAY, RED, (630 + 620*(1 - p2._hp/p2._hpfull), 10, 630, 50))
     pg.draw.rect(GAMEDISPLAY, BLACK, p1.get_hitbox())
     pg.draw.rect(GAMEDISPLAY, WHITE, p2.get_hitbox())
     GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image

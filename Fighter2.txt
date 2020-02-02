@@ -1,4 +1,4 @@
-hp	100
+hp	500
 idle	Sprites/red/red_idle.png
 pnch	Sprites/red/red_punch0.png
 pnch	Sprites/red/red_punch1.png
