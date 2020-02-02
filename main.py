@@ -29,7 +29,7 @@ CLOCK        = pg.time.Clock()
 
 # Game constants
 BACKGROUND  = pg.transform.scale(pg.image.load("Sprites/background.png"), (1280,720))
-GENERALFONT = pg.font.Sysfont(None, 32)
+GENERALFONT = pg.font.SysFont(None, 200)
 DEBUG       = True
 FLOOR       = 450 
 
@@ -62,3 +62,14 @@ while (p1._hp >= 0 or p2._hp >= 0):
 
     pg.display.update() # displays image
 
+xy  = GENERALFONT.size(("BLUE" if p1._hp else "RED") + " WINS!")
+MSG = GENERALFONT.render(("BLUE" if p1._hp else "RED") + " WINS!", True, BLUE if p1._hp else RED)
+center = (WINDOWWIDTH/2 - xy[0]/2, WINDOWHEIGHT/2 - xy[1]/2)
+GAMEDISPLAY.blit(MSG, center)
+pg.display.update()
+
+while True:
+    for event in pg.event.get():
+        if (event.type == pg.QUIT): 
+            pg.quit()
+            quit()

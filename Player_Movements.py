@@ -56,10 +56,10 @@ def movement(p1, p2, event):
     if not (type(p1).overlap(p1.get_activehit(), p2.get_activehit())):
         if type(p1).overlap(p1.get_activehit(), p2.get_hitbox()):
             p2._hp -= p1._damage
-            p2.set_xv(5)
-            p2.set_yv(5)
+            p2.inc_x(5)
+            p2.set_yv(-5)
         if type(p1).overlap(p1.get_hitbox(), p2.get_activehit()):
             p1._hp -= p2._damage
-            p1.set_xv(5)
-            p1.set_yv(5)
+            p1.inc_x(5)
+            p1.set_yv(-5)
     
