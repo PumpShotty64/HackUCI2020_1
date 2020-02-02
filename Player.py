@@ -88,14 +88,3 @@ class Player:
         else:
             self.is_jumping = True
             self._yv += Player.GRAVITY
-
-'''
-    def overlap(self, other):
-        if (self._x + self._w) > other._x:
-            if (self._y + self._h) > other._h:
-                return True
-
-        if (other._x + other._w) > self._x:
-            if (self._y + self._h) > other._h:
-                return False
-'''

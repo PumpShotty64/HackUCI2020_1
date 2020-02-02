@@ -19,3 +19,7 @@ w	100
 h	200
 wb	75
 hb	0
+cattx	5
+catty	40
+attx	24
+atty	150

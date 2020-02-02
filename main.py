@@ -29,20 +29,16 @@ CLOCK        = pg.time.Clock()
 
 # Game constants
 BACKGROUND  = pg.transform.scale(pg.image.load("Sprites/background.png"), (1280,720))
-GENERALFONT = pg.font.SysFont(None, 32)
-DEBUGFONT   = pg.font.SysFont(None, 200)
-DEBUGGERMSG = DEBUGFONT.render("HELLO", True, WHITE)
+GENERALFONT = pg.font.Sysfont(None, 32)
+DEBUG       = True
 FLOOR       = 450 
 
 
 # Game code begins
-try:
-    p1 = construct("Fighter1.txt")
-    p2 = construct("Fighter2.txt", True)
-except:
-    input(traceback.format_exc())
+p1 = construct("Fighter1.txt")
+p2 = construct("Fighter2.txt", True)
 
-while True:
+while (p1._hp >= 0 or p2._hp >= 0):
     for event in pg.event.get():
         if (event.type == pg.QUIT): 
             pg.quit()
@@ -56,12 +52,13 @@ while True:
     pg.draw.rect(GAMEDISPLAY, GOLD, (0, 0, 1280, 70))
     pg.draw.rect(GAMEDISPLAY, BLUE, (10, 10, 620 - 630*(1 - p1._hp/p1._hpfull), 50))
     pg.draw.rect(GAMEDISPLAY, RED, (630 + 620*(1 - p2._hp/p2._hpfull), 10, 630, 50))
-    pg.draw.rect(GAMEDISPLAY, BLACK, p1.get_hitbox())
-    pg.draw.rect(GAMEDISPLAY, WHITE, p2.get_hitbox())
+    if DEBUG:
+        pg.draw.rect(GAMEDISPLAY, BLACK, p1.get_hitbox())
+        pg.draw.rect(GAMEDISPLAY, WHITE, p2.get_hitbox())
+        pg.draw.rect(GAMEDISPLAY, RED, p1.get_activehit())
+        pg.draw.rect(GAMEDISPLAY, BLUE, p2.get_activehit())
     GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image
     GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy()) 
-    pg.draw.rect(GAMEDISPLAY, RED, p1.get_activehit())
 
-
-    #GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
     pg.display.update() # displays image
+

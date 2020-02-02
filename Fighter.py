@@ -53,7 +53,8 @@ def construct(inf, reverse = False):
     return Fighter(d["hp"],   d["idle"], d["walk"], 
                    d["pnch"], d["kick"], d["crch"], 
                    (d["x"], d["y"]), (d["xv"], d["yv"]), 
-                   (d["w"], d["h"]), (d["wb"], d["hb"]))
+                   (d["w"], d["h"]), (d["wb"], d["hb"]),
+                   (d["attx"], d["atty"], d["cattx"], d["catty"]))
 
 
 
@@ -61,7 +62,7 @@ class Fighter(Player):
     WALKBUFFER   = 4
     ATTACKBUFFER = 20
     KICKBUFFER   = 2
-    def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh, cor):
+    def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh, cor, attxy):
         self._hp        = hp
         self._hpfull    = hp
         self._idle      = idle[0]
@@ -79,6 +80,7 @@ class Fighter(Player):
 
         self._hitbox    = (xy[0], xy[1], wh[0], wh[1])
         self._hitboxcor = cor
+        self._attcor    = (attxy[0], attxy[1], attxy[2], attxy[3])
 
         self._action    = 0
         self._actionbuf = 0
@@ -128,11 +130,11 @@ class Fighter(Player):
                 self._walk    = self._walk.next
                 self._walking = 0
         if sprite == 3: 
-            self._activeHit = (self.get_x() + 125, self.get_y() + 150, 50, 50)
+            self._activeHit = (self.get_x() + self._attcor[0], self.get_y() + self._attcor[1], 50, 50)
             self._sprite = self._kick
             self._damage = 1
         if sprite == 4:
-            self._activeHit = (self.get_x() + 100, self.get_y() + 40, 90, 100)
+            self._activeHit = (self.get_x() + self._attcor[2], self.get_y() + self._attcor[3], 90, 100)
             self._action = 2
             self._sprite = self._punch.value
             self._actionbuf += 1
@@ -140,13 +142,11 @@ class Fighter(Player):
             if self._actionbuf > self.ATTACKBUFFER*0.60:
                 self._activeHit = (0, 0, 0, 0)
                 self._sprite = self._idle
-                self._damage = 0
             if self._actionbuf == self.ATTACKBUFFER:
                 self._punch = self._punch.next
                 self._actionbuf = 0
                 self._action = 0
                 self._activeHit = (0, 0, 0, 0)
-                self._damage = 0
 
     @staticmethod
     def overlap(h, other):
