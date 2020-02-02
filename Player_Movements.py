@@ -16,6 +16,8 @@ def movement(p1, p2, event):
     if (keys[pg.K_c]):
         if (p1.is_crouching):
             p1.set_sprite(3)
+        else:
+            p1.set_sprite(4)
 
 
     if (not p1.is_crouching or (p1.is_crouching and p1.is_jumping)):

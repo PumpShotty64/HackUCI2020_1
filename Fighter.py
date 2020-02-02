@@ -41,6 +41,14 @@ def construct(inf, reverse = False):
     current.next = start
     d["walk"] = start
 
+    start   = LinkedList(None, d["pnch"][0])
+    current = start
+    for i in range(1, len(d["pnch"])):
+        current.next = LinkedList(None, d["pnch"][i])
+        current = current.next
+    current.next = start
+    d["pnch"] = start
+
     # return a fighter containing the data specified in FighterX.txt
     return Fighter(d["hp"],   d["idle"], d["walk"], 
                    d["pnch"], d["kick"], d["crch"], 
@@ -50,24 +58,37 @@ def construct(inf, reverse = False):
 
 
 class Fighter(Player):
-    WALKBUFFER = 4
+    WALKBUFFER   = 4
+    ATTACKBUFFER = 5
+    KICKBUFFER   = 2
     def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh, cor):
         self._hp        = hp
         self._idle      = idle[0]
-        self._walk      = walk             # linked list type
-        self._punch     = tuple(punch)
-        self._punchInd  = 0
-        self._kick      = tuple(kick)
-        self._crouch    = crouch[0]
         self._sprite    = self._idle       # most current sprite to be used
+        
+        self._walk      = walk             # linked list type
         self._walkFront = walk             # use to reset walking animation
         self._walking   = 0
+
+        self._punch     = punch            # linked list type
+        self._pnchFront = punch            # use to reset punching animation
+
+        self._kick      = kick[1]
+        self._crouch    = crouch[0]
+
         self._hitbox    = (xy[0], xy[1], wh[0], wh[1])
         self._hitboxcor = cor
+
+        self._action    = 0
+        self._actionbuf = 0
+
         Player.__init__(self, xy, xyv, wh)
 
     def get_hitbox(self):
         return self._hitbox
+
+    def set_hitbox(self, tup):
+        self._hitbox = tup
 
     def reset_hitbox(self):
         self._hitbox = (self.get_x() + self._hitboxcor[0], self.get_y() + self._hitboxcor[1], self.get_w(), self.get_h())
@@ -76,8 +97,11 @@ class Fighter(Player):
         return self._sprite
 
     def resetWalk(self):
-        self._walk = self._walkFront
+        self._walk    = self._walkFront
         self._walking = 0
+
+    def resetPunch(self):
+        self._punch = self._pnchFront
 
     # box = ((left, top), (right, bottom))
     def attack(self, dmg, box, ph):
@@ -95,10 +119,12 @@ class Fighter(Player):
         if sprite == 0:
             self._sprite = self._idle
             self.is_crouching = False
-            #self.set_hitbox() make hitbox half height
+            self.reset_hitbox()
         if sprite == 1:
             self._sprite = self._crouch
             self.is_crouching = True
+            self.set_hitbox( (self.get_x() + self._hitboxcor[0], self.get_y() + self.get_h()/2 + self._hitboxcor[1],
+                              self.get_w(), self.get_h()/2) )
         if sprite == 2:
             self._sprite = self._walk.value
             self._walking += 1
@@ -106,18 +132,25 @@ class Fighter(Player):
                 self._walk    = self._walk.next
                 self._walking = 0
         if sprite == 3: 
-            self._sprite = self._kick[1]
-            # set animation
+            self._sprite = self._kick
         if sprite == 4:
-            self._sprite = self._punch[_punchInd]
-            self._punchInd += 1
-            # punh animation
+            self._action = 2
+            self._sprite = self._punch.value
+            self._actionbuf += 1
+            if self._actionbuf == self.ATTACKBUFFER:
+                self._punch = self._punch.next
+                self._actionbuf = 0
+                self._action = 0
+
+            
 
     def update(self, floor):
-        Player.update(self, floor)
-        self.reset_hitbox()
-        if self.get_xv() != 0 and not self.is_jumping:
-            self.set_sprite(2)
+        if self._action == 0:
+            Player.update(self, floor)
+            if self.get_xv() != 0 and not self.is_jumping:
+                self.set_sprite(2)
+        if self._action == 2:
+            self.set_sprite(4)
 
 
 
