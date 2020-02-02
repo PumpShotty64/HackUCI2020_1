@@ -19,14 +19,19 @@ def movement(p1, p2, event):
         else:
             p1.set_sprite(4)
     if (not p1.is_crouching or (p1.is_crouching and p1.is_jumping)):
-        if (keys[pg.K_d]): # RIGHT
+        if (keys[pg.K_d] and p1.get_xy()[0] >= 0): # RIGHT
             p1.inc_x(p1.SPEED)
             if (not p1.is_crouching): p1.set_sprite(2)
-        if (keys[pg.K_a]): # LEFT
+        if (keys[pg.K_a] and p1.get_xy()[0] <= 1280): # LEFT
             p1.inc_x(-p1.SPEED)
             if (not p1.is_crouching): p1.set_sprite(2)
         if (keys[pg.K_w]): # UP
             p1.set_yv(-p1.JUMP)
+
+    if (p1.get_xy()[0] < 0):
+        p1.set_x(0)
+    if (p1.get_xy()[0] > 1130):
+        p1.set_x(1130)
 
 
     # Player 2
@@ -39,14 +44,19 @@ def movement(p1, p2, event):
         else:
             p2.set_sprite(4)
     if (not p2.is_crouching or (p2.is_crouching and p2.is_jumping)):
-        if (keys[pg.K_LEFT]): # LEFT
+        if (keys[pg.K_LEFT] and p2.get_xy()[0] <= 1280): # LEFT
             p2.inc_x(-p2.SPEED)
             p2.set_sprite(2)
-        if (keys[pg.K_RIGHT]): # RIGHT
+        if (keys[pg.K_RIGHT] and p2.get_xy()[0] >= -50): # RIGHT
             p2.inc_x(p2.SPEED)
             p2.set_sprite(2)
         if (keys[pg.K_UP]): # UP
             p2.set_yv(-p2.JUMP)
+
+    if (p2.get_xy()[0] < -50):
+        p2.set_x(-50)
+    if (p2.get_xy()[0] > 1080):
+        p2.set_x(1080)
 
     # overlapping boxes
     if type(p1).overlap(p1.get_hitbox(), p2.get_hitbox()):
@@ -60,6 +70,6 @@ def movement(p1, p2, event):
             p2.set_yv(-5)
         if type(p1).overlap(p1.get_hitbox(), p2.get_activehit()):
             p1._hp -= p2._damage
-            p1.inc_x(5)
+            p1.inc_x(-5)
             p1.set_yv(-5)
     

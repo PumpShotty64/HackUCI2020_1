@@ -38,7 +38,7 @@ FLOOR       = 450
 p1 = construct("Fighter1.txt")
 p2 = construct("Fighter2.txt", True)
 
-while (p1._hp >= 0 or p2._hp >= 0):
+while (p1._hp >= 0 and p2._hp >= 0):
     for event in pg.event.get():
         if (event.type == pg.QUIT): 
             pg.quit()
