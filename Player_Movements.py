@@ -10,6 +10,8 @@ def movement(p1, p2, event):
         p1.inc_x(-p1.SPEED)
     if (keys[pg.K_d]): # RIGHT
         p1.inc_x(p1.SPEED)
+    if (keys[pg.K_w]): # JUMP
+        p1.set_yv(p1.JUMP)
 
 
     # if (event.type == pg.KEYDOWN):
