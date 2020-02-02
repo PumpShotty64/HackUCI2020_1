@@ -6,6 +6,7 @@ def movement(p1, p2, event):
 
     keys = pg.key.get_pressed()
     p1.set_sprite(0)
+    p2.set_sprite(0)
 
     if (keys[pg.K_a]): # LEFT
         p1.inc_x(-p1.SPEED)
@@ -13,6 +14,14 @@ def movement(p1, p2, event):
     if (keys[pg.K_d]): # RIGHT
         p1.inc_x(p1.SPEED)
         p1.set_sprite(2)
+
+
+    if (keys[pg.K_LEFT]): # LEFT
+        p2.inc_x(-p2.SPEED)
+        p2.set_sprite(2)
+    if (keys[pg.K_RIGHT]): # RIGHT
+        p2.inc_x(p2.SPEED)
+        p2.set_sprite(2)
 
 
     # if (event.type == pg.KEYDOWN):
