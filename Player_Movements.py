@@ -39,5 +39,8 @@ def movement(p1, p2, event):
         p2.inc_x(p2.SPEED)
         p2.set_sprite(2)
 
-    if p1.overlap(p2):
+    if type(p1).overlap(p1.get_hitbox(), p2.get_hitbox()):
+        print("overlap")
+
+    if type(p1).overlap(p1.get_activehit(), p2.get_hitbox()):
         print("overlap")
