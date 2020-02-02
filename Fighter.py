@@ -150,6 +150,7 @@ class Fighter(Player):
             if self.get_xv() != 0 and not self.is_jumping:
                 self.set_sprite(2)
         if self._action == 2:
+            Player.update(self, floor)
             self.set_sprite(4)
 
 
