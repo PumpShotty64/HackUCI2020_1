@@ -82,6 +82,9 @@ class Fighter(Player):
         self._action    = 0
         self._actionbuf = 0
 
+        self._activeHit = (0,0, 0,0)
+        self._damage    = 0 
+
         Player.__init__(self, xy, xyv, wh)
 
     def get_hitbox(self):
@@ -93,9 +96,6 @@ class Fighter(Player):
     def reset_hitbox(self):
         self._hitbox = (self.get_x() + self._hitboxcor[0], self.get_y() + self._hitboxcor[1], self.get_w(), self.get_h())
 
-    def get_sprite(self):
-        return self._sprite
-
     def resetWalk(self):
         self._walk    = self._walkFront
         self._walking = 0
@@ -103,23 +103,18 @@ class Fighter(Player):
     def resetPunch(self):
         self._punch = self._pnchFront
 
-    # box = ((left, top), (right, bottom))
-    def attack(self, dmg, box, ph):
-        pass
+    def get_activehit(self):
+        return self._activeHit
 
-    def overlap(self, other):
-        h = self.get_hitbox()
-        other = other.get_hitbox()
-        if (h[0] + h[2] > other[0] and h[1] + h[3] > other[1]):
-            if not (h[0] > other[0] + other[2] or h[1] > other[1] + other[3]):
-                print("OVERLAP")
-                return True
+    def get_sprite(self):
+        return self._sprite
 
     def set_sprite(self, sprite):
         if sprite == 0:
             self._sprite = self._idle
             self.is_crouching = False
             self.reset_hitbox()
+            self._activeHit = (0, 0, 0, 0)
         if sprite == 1:
             self._sprite = self._crouch
             self.is_crouching = True
@@ -132,8 +127,10 @@ class Fighter(Player):
                 self._walk    = self._walk.next
                 self._walking = 0
         if sprite == 3: 
+            self._activeHit = (self.get_x() + 125, self.get_y() + 150, 50, 50)
             self._sprite = self._kick
         if sprite == 4:
+            self._activeHit = (self.get_x() + 100, self.get_y() + 40, 90, 100)
             self._action = 2
             self._sprite = self._punch.value
             self._actionbuf += 1
@@ -141,14 +138,21 @@ class Fighter(Player):
                 self._punch = self._punch.next
                 self._actionbuf = 0
                 self._action = 0
+                self._activeHit = (0, 0, 0, 0)
 
-            
+    @staticmethod
+    def overlap(h, other):
+        if (h[0] + h[2] > other[0] and h[1] + h[3] > other[1]):
+            if not (h[0] > other[0] + other[2] or h[1] > other[1] + other[3]):
+                return True
 
     def update(self, floor):
         if self._action == 0:
             Player.update(self, floor)
             if self.get_xv() != 0 and not self.is_jumping:
                 self.set_sprite(2)
+        if self._action == 1: 
+            pass # for special hit
         if self._action == 2:
             Player.update(self, floor)
             self.set_sprite(4)

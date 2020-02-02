@@ -15,6 +15,7 @@ RESOLUTION   = (WINDOWWIDTH, WINDOWHEIGHT)
 WINDOWNAME   = "HackUCI2020"
 WHITE        = (255, 255, 255)
 BLACK        = (0, 0, 0)
+RED          = (255, 0, 0)
 
 
 # Pygame setup
@@ -54,6 +55,7 @@ while True:
     pg.draw.rect(GAMEDISPLAY, WHITE, p2.get_hitbox())
     GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image
     GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy()) 
+    pg.draw.rect(GAMEDISPLAY, RED, p1.get_activehit())
 
 
     #GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
