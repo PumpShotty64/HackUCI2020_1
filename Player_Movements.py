@@ -31,7 +31,7 @@ def movement(p1, p2, event):
         p2.set_sprite(2)
 
     if p1.overlap(p2.get_hitbox()):
-        print("overlap!")
+        print("overlap!!!!")
 
     # if (event.type == pg.KEYDOWN):
     #     if (event.key == pg.K_a): # LEFT
