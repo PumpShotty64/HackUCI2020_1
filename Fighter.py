@@ -56,6 +56,7 @@ class Fighter(Player):
         self._idle      = idle[0]
         self._walk      = walk             # linked list type
         self._punch     = tuple(punch)
+        self._punchInd  = 0
         self._kick      = tuple(kick)
         self._crouch    = crouch[0]
         self._sprite    = self._idle       # most current sprite to be used
@@ -102,9 +103,11 @@ class Fighter(Player):
                 self._walk    = self._walk.next
                 self._walking = 0
         if sprite == 3: 
-            pass # kick
+            self._sprite = self._kick[1]
         if sprite == 4:
-            pass # punch
+            self._sprite = self._punch[_punchInd]
+            self._punchInd += 1
+
 
     def update(self, floor):
         Player.update(self, floor)
