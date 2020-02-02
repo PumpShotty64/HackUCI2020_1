@@ -5,13 +5,14 @@ import pygame as pg
 def movement(p1, p2, event):
 
     keys = pg.key.get_pressed()
+    p1.set_sprite(0)
 
     if (keys[pg.K_a]): # LEFT
         p1.inc_x(-p1.SPEED)
+        p1.set_sprite(2)
     if (keys[pg.K_d]): # RIGHT
         p1.inc_x(p1.SPEED)
-    if (keys[pg.K_w]): # JUMP
-        p1.set_yv(p1.JUMP)
+        p1.set_sprite(2)
 
 
     # if (event.type == pg.KEYDOWN):

@@ -49,6 +49,7 @@ def construct(inf, reverse = False):
 
 
 class Fighter(Player):
+    WALKBUFFER = 4
     def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh):
         self._hp        = hp
         self._idle      = idle[0]
@@ -58,10 +59,15 @@ class Fighter(Player):
         self._crouch    = crouch[0]
         self._sprite    = self._idle       # most current sprite to be used
         self._walkFront = walk             # use to reset walking animation
+        self._walking   = 0
         Player.__init__(self, xy, xyv, wh)
 
     def get_sprite(self):
         return self._sprite
+
+    def resetWalk(self):
+        self._walk = self._walkFront
+        self._walking = 0
 
     # box = ((left, top), (right, bottom))
     def attack(self, dmg, box, ph):
@@ -80,7 +86,11 @@ class Fighter(Player):
             self._sprite = self._crouch
             self.is_crouching = True
         if sprite == 2:
-            self._sprite = self._walk.next
+            self._sprite = self._walk.value
+            self._walking += 1
+            if self.WALKBUFFER == self._walking:
+                self._walk = self._walk.next
+                self._walking = 0
         if sprite == 3: 
             pass # kick
         if sprite == 4:
@@ -88,6 +98,8 @@ class Fighter(Player):
 
     def update(self, floor):
         Player.update(self, floor)
+        if self.get_xv() != 0 and not self.is_jumping:
+            self.set_sprite(2)
 
 
 
