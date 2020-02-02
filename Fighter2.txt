@@ -23,3 +23,4 @@ cattx	5
 catty	40
 attx	24
 atty	150
+sprmx	100

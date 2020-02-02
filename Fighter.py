@@ -54,17 +54,20 @@ def construct(inf, reverse = False):
                    d["pnch"], d["kick"], d["crch"], 
                    (d["x"], d["y"]), (d["xv"], d["yv"]), 
                    (d["w"], d["h"]), (d["wb"], d["hb"]),
-                   (d["attx"], d["atty"], d["cattx"], d["catty"]))
+                   (d["attx"], d["atty"], d["cattx"], d["catty"]),
+                   d["sprmx"])
 
 
 
 class Fighter(Player):
     WALKBUFFER   = 4
-    ATTACKBUFFER = 20
+    ATTACKBUFFER = 30
     KICKBUFFER   = 2
-    def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh, cor, attxy):
+    def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh, cor, attxy, sprmx):
         self._hp        = hp
         self._hpfull    = hp
+        self._super     = 0
+        self._supermax  = sprmx
         self._idle      = idle[0]
         self._sprite    = self._idle       # most current sprite to be used
         
@@ -139,7 +142,7 @@ class Fighter(Player):
             self._sprite = self._punch.value
             self._actionbuf += 1
             self._damage = 3
-            if self._actionbuf > self.ATTACKBUFFER*0.60:
+            if self._actionbuf > self.ATTACKBUFFER*0.35:
                 self._activeHit = (0, 0, 0, 0)
                 self._sprite = self._idle
             if self._actionbuf == self.ATTACKBUFFER:

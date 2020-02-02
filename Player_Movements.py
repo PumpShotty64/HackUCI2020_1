@@ -52,24 +52,31 @@ def movement(p1, p2, event):
             p2.set_sprite(2)
         if (keys[pg.K_UP]): # UP
             p2.set_yv(-p2.JUMP)
-
     if (p2.get_xy()[0] < -50):
         p2.set_x(-50)
     if (p2.get_xy()[0] > 1080):
         p2.set_x(1080)
 
-    # overlapping boxes
-    if type(p1).overlap(p1.get_hitbox(), p2.get_hitbox()):
-        # make them both stop moving
-        pass
 
     if not (type(p1).overlap(p1.get_activehit(), p2.get_activehit())):
         if type(p1).overlap(p1.get_activehit(), p2.get_hitbox()):
             p2._hp -= p1._damage
-            p2.inc_x(5)
-            p2.set_yv(-5)
+            p2._super += 2*p1._damage
+            p1._super += p1._damage
+            if p1._damage == 1:
+                p2.inc_x(5)
+                p2.set_yv(-20)
+            else:
+                p2.inc_x(5)
+                p2.set_yv(-5)
         if type(p1).overlap(p1.get_hitbox(), p2.get_activehit()):
             p1._hp -= p2._damage
-            p1.inc_x(-5)
-            p1.set_yv(-5)
+            p1._super += 2*p2._damage
+            p2._super += p2._damage
+            if p2._damage == 1:
+                p1.inc_x(-5)
+                p1.set_yv(-20)
+            else:
+                p1.inc_x(-5)
+                p1.set_yv(-5)
     
