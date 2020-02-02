@@ -16,6 +16,7 @@ WINDOWNAME   = "HackUCI2020"
 WHITE        = (255, 255, 255)
 BLACK        = (0, 0, 0)
 
+
 # Pygame setup
 pg.init()
 # pg.display.set_icon(pg.image.load("someImage.png"))
@@ -31,28 +32,29 @@ DEBUGGERMSG = DEBUGFONT.render("HELLO", True, WHITE)
 FLOOR       = 450 
 
 
-
 # Game code begins
 try:
-	p1 = construct("Fighter1.txt")
-	p2 = construct("Fighter2.txt", True)
+    p1 = construct("Fighter1.txt")
+    p2 = construct("Fighter2.txt", True)
 except:
-	input(traceback.format_exc())
+    input(traceback.format_exc())
 
 while True:
-	for event in pg.event.get():
-		if (event.type == pg.QUIT): 
-			pg.quit()
-			quit()
-	
-	PM.movement(p1,p2,event)
-	p1.update(FLOOR)
-	p2.update(FLOOR)
+    for event in pg.event.get():
+        if (event.type == pg.QUIT): 
+            pg.quit()
+            quit()
+    
+    PM.movement(p1,p2,event)
+    p1.update(FLOOR)
+    p2.update(FLOOR)
 
-	GAMEDISPLAY.blit(BACKGROUND, (0, 0))
-	GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image
-	GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy()) 
+    GAMEDISPLAY.blit(BACKGROUND, (0, 0))
+    pg.draw.rect(GAMEDISPLAY, BLACK, p1.get_hitbox())
+    pg.draw.rect(GAMEDISPLAY, WHITE, p2.get_hitbox())
+    GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image
+    GAMEDISPLAY.blit(p2.get_sprite(), p2.get_xy()) 
 
 
-	#GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
-	pg.display.update() # displays image
+    #GAMEDISPLAY.blit(img2, (400, 100)) # arbitrary position
+    pg.display.update() # displays image

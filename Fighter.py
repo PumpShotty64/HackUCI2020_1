@@ -44,13 +44,14 @@ def construct(inf, reverse = False):
     # return a fighter containing the data specified in FighterX.txt
     return Fighter(d["hp"],   d["idle"], d["walk"], 
                    d["pnch"], d["kick"], d["crch"], 
-                   (d["x"], d["y"]), (d["xv"], d["yv"]), (d["w"], d["h"]))
+                   (d["x"], d["y"]), (d["xv"], d["yv"]), 
+                   (d["w"], d["h"]), (d["wb"], d["hb"]))
 
 
 
 class Fighter(Player):
     WALKBUFFER = 4
-    def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh):
+    def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh, cor):
         self._hp        = hp
         self._idle      = idle[0]
         self._walk      = walk             # linked list type
@@ -60,7 +61,15 @@ class Fighter(Player):
         self._sprite    = self._idle       # most current sprite to be used
         self._walkFront = walk             # use to reset walking animation
         self._walking   = 0
+        self._hitbox    = (xy[0], xy[1], wh[0], wh[1])
+        self._hitboxcor = cor
         Player.__init__(self, xy, xyv, wh)
+
+    def get_hitbox(self):
+        return self._hitbox
+
+    def reset_hitbox(self):
+        self._hitbox = (self.get_x() + self._hitboxcor[0], self.get_y() + self._hitboxcor[1], self.get_w(), self.get_h())
 
     def get_sprite(self):
         return self._sprite
@@ -74,7 +83,8 @@ class Fighter(Player):
         pass
 
     def overlap(self, other):
-        if (self._x + self._w) > other[0][0] and (self._y + self._h) > other[0][1]:
+        h = self.get_hitbox()
+        if (h[0] + h[2] > other[0]) and (h[1] + h[3] > other[1]):
             print("OVERLAP")
             return True
 
@@ -89,7 +99,7 @@ class Fighter(Player):
             self._sprite = self._walk.value
             self._walking += 1
             if self.WALKBUFFER == self._walking:
-                self._walk = self._walk.next
+                self._walk    = self._walk.next
                 self._walking = 0
         if sprite == 3: 
             pass # kick
@@ -98,6 +108,7 @@ class Fighter(Player):
 
     def update(self, floor):
         Player.update(self, floor)
+        self.reset_hitbox()
         if self.get_xv() != 0 and not self.is_jumping:
             self.set_sprite(2)
 
