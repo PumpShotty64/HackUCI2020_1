@@ -36,3 +36,6 @@ def movement(p1, p2, event):
     if (keys[pg.K_RIGHT]): # RIGHT
         p2.inc_x(p2.SPEED)
         p2.set_sprite(2)
+
+    if p1.overlap(p2):
+        print("overlap")

@@ -85,14 +85,17 @@ class Fighter(Player):
 
     def overlap(self, other):
         h = self.get_hitbox()
-        if (h[0] + h[2] > other[0]) and (h[1] + h[3] > other[1]):
-            print("OVERLAP")
-            return True
+        other = other.get_hitbox()
+        if (h[0] + h[2] > other[0] and h[1] + h[3] > other[1]):
+            if not (h[0] > other[0] + other[2] or h[1] > other[1] + other[3]):
+                print("OVERLAP")
+                return True
 
     def set_sprite(self, sprite):
         if sprite == 0:
             self._sprite = self._idle
             self.is_crouching = False
+            #self.set_hitbox() make hitbox half height
         if sprite == 1:
             self._sprite = self._crouch
             self.is_crouching = True
@@ -104,10 +107,11 @@ class Fighter(Player):
                 self._walking = 0
         if sprite == 3: 
             self._sprite = self._kick[1]
+            # set animation
         if sprite == 4:
             self._sprite = self._punch[_punchInd]
             self._punchInd += 1
-
+            # punh animation
 
     def update(self, floor):
         Player.update(self, floor)
