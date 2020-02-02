@@ -59,7 +59,7 @@ def construct(inf, reverse = False):
 
 class Fighter(Player):
     WALKBUFFER   = 4
-    ATTACKBUFFER = 5
+    ATTACKBUFFER = 20
     KICKBUFFER   = 2
     def __init__(self, hp, idle, walk, punch, kick, crouch, xy, xyv, wh, cor):
         self._hp        = hp
@@ -84,6 +84,7 @@ class Fighter(Player):
 
         self._activeHit = (0,0, 0,0)
         self._damage    = 0 
+        self._newhitb   = False
 
         Player.__init__(self, xy, xyv, wh)
 
@@ -134,6 +135,9 @@ class Fighter(Player):
             self._action = 2
             self._sprite = self._punch.value
             self._actionbuf += 1
+            if self._actionbuf > self.ATTACKBUFFER*0.60:
+                self._activeHit = (0, 0, 0, 0)
+                self._sprite = self._idle
             if self._actionbuf == self.ATTACKBUFFER:
                 self._punch = self._punch.next
                 self._actionbuf = 0

@@ -16,6 +16,8 @@ WINDOWNAME   = "HackUCI2020"
 WHITE        = (255, 255, 255)
 BLACK        = (0, 0, 0)
 RED          = (255, 0, 0)
+BLUE         = (0, 0, 255)
+GOLD         = (212, 175, 55)
 
 
 # Pygame setup
@@ -26,7 +28,7 @@ GAMEDISPLAY  = pg.display.set_mode(RESOLUTION)
 CLOCK        = pg.time.Clock()
 
 # Game constants
-BACKGROUND  = pg.transform.scale(pg.image.load("Sprites/tempBack.jpg"), (1280,720))
+BACKGROUND  = pg.transform.scale(pg.image.load("Sprites/background.png"), (1280,720))
 GENERALFONT = pg.font.SysFont(None, 32)
 DEBUGFONT   = pg.font.SysFont(None, 200)
 DEBUGGERMSG = DEBUGFONT.render("HELLO", True, WHITE)
@@ -51,6 +53,9 @@ while True:
     p2.update(FLOOR)
 
     GAMEDISPLAY.blit(BACKGROUND, (0, 0))
+    pg.draw.rect(GAMEDISPLAY, GOLD, (0, 0, 1280, 70))
+    pg.draw.rect(GAMEDISPLAY, BLUE, (10, 10, 630 - 630*(1 - p1._hp/100), 50))
+    pg.draw.rect(GAMEDISPLAY, RED, (630 + 630*(1 - p1._hp/100), 10, 630, 50))
     pg.draw.rect(GAMEDISPLAY, BLACK, p1.get_hitbox())
     pg.draw.rect(GAMEDISPLAY, WHITE, p2.get_hitbox())
     GAMEDISPLAY.blit(p1.get_sprite(), p1.get_xy()) # draws image
